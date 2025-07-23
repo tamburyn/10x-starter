@@ -1,0 +1,79 @@
+Jesteś architektem baz danych, którego zadaniem jest stworzenie schematu bazy danych PostgreSQL na podstawie informacji dostarczonych z sesji planowania, dokumentu wymagań produktu (PRD) i stacku technologicznym. Twoim celem jest zaprojektowanie wydajnej i skalowalnej struktury bazy danych, która spełnia wymagania projektu.
+
+Prosimy o uważne zapoznanie się z poniższymi informacjami:
+
+<product_requirements>
+@prd.md
+</product_requirements>
+
+
+Przeanalizuj dostarczone informacje, koncentrując się na aspektach istotnych dla projektowania. Rozważ następujące kwestie:
+
+Oto dane które mogę wysy
+
+
+Na podstawie analizy wygeneruj listę pytań i zaleceń. Powinny one dotyczyć wszelkich niejasności, potencjalnych problemów lub obszarów, w których potrzeba więcej informacji, aby stworzyć skuteczny schemat bazy danych. Rozważ pytania dotyczące:
+
+
+
+Dane wyjściowe powinny mieć następującą strukturę:
+Buildable products:[{
+  "sku": "SKU-BUCK-XL-GRAY",
+  "name": "BangProof Bucket ExtraLarge Khaki",
+  "buildable_units": "0.0",
+  "last_updated": "2025-07-23 13:10:35.705057 UTC"
+}, {
+  "sku": "SKU-BUCK-LG-DIGITALCAMO",
+  "name": "BangProof Bucket Large Digital Camo",
+  "buildable_units": "0.0",
+  "last_updated": "2025-07-23 13:10:35.705057 UTC"
+}, {
+  "sku": "SKU-BUCK-XL-PINK",
+  "name": "BangProof Bucket Extra Large Pink",
+  "buildable_units": "0.0",
+  "last_updated": "2025-07-23 13:10:35.705057 UTC"
+}, {
+  "sku": "SKU-CAP-XL-BLACK_KHAKI",
+  "name": "BangProof Cap ExtraLarge Black Shell Khaki Visor",
+  "buildable_units": "0.0",
+  "last_updated": "2025-07-23 13:10:35.705057 UTC"
+}, {
+  "sku": "SKU-CAP-SM-GRAY_DIGITALCAMO",
+  "name": "BangProof Cap Small Gray Shell Digital Camo Visor",
+  "buildable_units": "0.0",
+  "last_updated": "2025-07-23 13:10:35.705057 UTC"
+}]
+
+
+
+3. <tech_stack>
+@tech-stack.md
+</tech_stack>
+
+Opisuje stack technologiczny, który zostanie wykorzystany w projekcie, co może wpłynąć na decyzje dotyczące projektu bazy danych.
+
+Wykonaj następujące kroki, aby utworzyć schemat bazy danych, nie zmieniaj nic w przesłanych schematach zaplanuj tylko nową formę autentykacji np przez wysłanie danych przez webhook n8n do tabeli big query:
+
+1. Przejrzyj PRD, aby upewnić się, że wszystkie wymagane funkcje i funkcjonalności są obsługiwane przez schemat bazy danych.
+2. Przeanalizuj stack technologiczny i upewnij się, że projekt bazy danych jest zoptymalizowany pod kątem wybranych technologii.
+
+4. Opisanie kompleksowego schematu bazy danych, który obejmuje
+   a. Tabele z odpowiednimi nazwami kolumn i typami danych
+   b. Klucze podstawowe i klucze obce
+   c. Indeksy poprawiające wydajność zapytań
+   d. Wszelkie niezbędne ograniczenia (np. unikalność, not null)
+
+5. Zdefiniuj relacje między tabelami, określając kardynalność (jeden-do-jednego, jeden-do-wielu, wiele-do-wielu) i wszelkie tabele łączące wymagane dla relacji wiele-do-wielu.
+
+7. Upewnij się, że schemat jest zgodny z najlepszymi praktykami projektowania, w tym normalizacji do odpowiedniego poziomu (zwykle 3NF, chyba że denormalizacja jest uzasadniona ze względu na wydajność).
+
+Ostateczny wynik powinien mieć następującą strukturę:
+```markdown
+1. Lista tabel z ich kolumnami, typami danych i ograniczeniami
+2. Relacje między tabelami
+3. Indeksy
+4. Zasady PostgreSQL (jeśli dotyczy)
+5. Wszelkie dodatkowe uwagi lub wyjaśnienia dotyczące decyzji projektowych
+```
+
+W odpowiedzi należy podać tylko ostateczny schemat bazy danych w formacie markdown, który zapiszesz w pliku .ai/db-plan.md bez uwzględniania procesu myślowego lub kroków pośrednich. Upewnij się, że schemat jest kompleksowy, dobrze zorganizowany i gotowy do wykorzystania jako podstawa do tworzenia migracji baz danych.

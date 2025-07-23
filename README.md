@@ -1,94 +1,94 @@
-# 10x Astro Starter
+ać# BangProof B2B
 
-A modern, opinionated starter template for building fast, accessible, and AI-friendly web applications.
+## 1. Project Name
 
-## Tech Stack
+BangProof B2B
 
-- [Astro](https://astro.build/) v5.5.5 - Modern web framework for building fast, content-focused websites
-- [React](https://react.dev/) v19.0.0 - UI library for building interactive components
-- [TypeScript](https://www.typescriptlang.org/) v5 - Type-safe JavaScript
-- [Tailwind CSS](https://tailwindcss.com/) v4.0.17 - Utility-first CSS framework
+## 2. Project Description
 
-## Prerequisites
+BangProof B2B is a comprehensive platform designed for B2B commerce integrated with Shopify. The platform enables seamless order processing and product reservations while offering real-time updates on product availability via Shopify and Big Query integrations. It features an automated backend driven by n8n and webhooks, handling tasks such as user registration (with complete company and personal data collection) and automated billing processes including the issuance of proforma and final invoices through integration with wFirma.
 
-- Node.js v22.14.0 (as specified in `.nvmrc`)
-- npm (comes with Node.js)
+## 3. Tech Stack
 
-## Getting Started
+- **Astro 5**
+- **TypeScript 5**
+- **React 19**
+- **Tailwind CSS 4**
+- **Shadcn/ui**
+- **Node.js 22.14.0** (as specified in .nvmrc)
 
-1. Clone the repository:
+## 4. Getting Started Locally
 
-```bash
-git clone https://github.com/przeprogramowani/10x-astro-starter.git
-cd 10x-astro-starter
-```
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd bangproof-b2b
+   ```
 
-2. Install dependencies:
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-```bash
-npm install
-```
+3. **Ensure you are using Node.js version 22.14.0**:
+   If you use nvm, you can run:
+   ```bash
+   nvm use
+   ```
 
-3. Run the development server:
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run dev
-```
+## 5. Available Scripts
 
-4. Build for production:
+The following scripts are available in the `package.json`:
 
-```bash
-npm run build
-```
+- **dev**: Starts the Astro development server
+  ```bash
+  npm run dev
+  ```
+- **build**: Builds the project for production
+  ```bash
+  npm run build
+  ```
+- **preview**: Previews the production build
+  ```bash
+  npm run preview
+  ```
+- **astro**: Runs Astro CLI commands
+  ```bash
+  npm run astro
+  ```
+- **lint**: Runs ESLint
+  ```bash
+  npm run lint
+  ```
+- **lint:fix**: Runs ESLint with auto-fix
+  ```bash
+  npm run lint:fix
+  ```
+- **format**: Formats code using Prettier
+  ```bash
+  npm run format
+  ```
 
-## Available Scripts
+## 6. Project Scope
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-- `npm run lint:fix` - Fix ESLint issues
+The project is focused on delivering a robust B2B solution for Shopify stores. Key features include:
 
-## Project Structure
+- **Real-Time Data Updates**: Integration with Shopify and Big Query ensures that product availability and production capacity data is updated in real time.
+- **User Registration and Authentication**: Streamlined registration and login processes that capture comprehensive company and personal data without complex authorization steps.
+- **Product Reservation and Purchase**: Enables customers to reserve and purchase products with immediate feedback and confirmation.
+- **Automated Billing Processes**: After purchase, the system automatically triggers webhooks to issue a proforma invoice via wFirma, followed by a final invoice after order fulfillment.
 
-```md
-.
-├── src/
-│   ├── layouts/    # Astro layouts
-│   ├── pages/      # Astro pages
-│   │   └── api/    # API endpoints
-│   ├── components/ # UI components (Astro & React)
-│   └── assets/     # Static assets
-├── public/         # Public assets
-```
+## 7. Project Status
 
-## AI Development Support
+Version: 0.0.1
 
-This project is configured with AI development tools to enhance the development experience, providing guidelines for:
+The project is under active development. Future updates will continue to refine features, enhance performance, and improve user experience based on feedback and performance metrics.
 
-- Project structure
-- Coding practices
-- Frontend development
-- Styling with Tailwind
-- Accessibility best practices
-- Astro and React guidelines
+## 8. License
 
-### Cursor IDE
-
-The project includes AI rules in `.cursor/rules/` directory that help Cursor IDE understand the project structure and provide better code suggestions.
-
-### GitHub Copilot
-
-AI instructions for GitHub Copilot are available in `.github/copilot-instructions.md`
-
-### Windsurf
-
-The `.windsurfrules` file contains AI configuration for Windsurf.
-
-## Contributing
-
-Please follow the AI guidelines and coding practices defined in the AI configuration files when contributing to this project.
-
-## License
-
-MIT
+This project is licensed under the MIT License.

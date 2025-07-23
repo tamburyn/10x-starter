@@ -1,0 +1,105 @@
+Jesteś doświadczonym menedżerem produktu, którego zadaniem jest stworzenie kompleksowego dokumentu wymagań produktu (PRD) w oparciu o poniższe opisy:
+
+<project_description>
+
+platforma do zamówień b2b dla sklepu na shopify
+
+- Możliwość rezerwacji produktów
+- Możliwość zakupu produktów
+- Możlowość sprawdzenia stanów magazynowych w danych w Big Query
+- Backend zbudowany w n8n i sterowany za pomocą webhooków 
+- Możliwość rejestracji i logowania użytkowników
+
+</project_description>
+
+<project_details>
+
+<conversation_summary>
+<decisions>
+1. Dane dotyczące dostępności stocku z Shopify oraz możliwości produkcyjnych z Big Query mają być aktualizowane w czasie rzeczywistym za pomocą webhooków.
+2. Funkcjonalności będą wdrażane sekwencyjnie, rozpoczynając od rejestracji/logowania, następnie prezentacji widoku stanów magazynowych z informacjami o terminach realizacji oraz procesu zakupu.
+3. Rejestracja/logowanie ma polegać na pobieraniu kompletnych danych firmy i użytkownika, bez dodatkowych kroków autoryzacyjnych.
+4. Po zakończeniu procesu zakupu system ma automatycznie wystawiać proformę w wFirma przy użyciu integracji backendu n8n i webhooków.
+5. Wystawienie faktury po realizacji zamówienia ma być inicjowane automatycznie poprzez wysyłanie danych na odpowiedni webhook.
+6. Priorytet stanowi szczegółowa specyfikacja integracji backendu n8n z systemem wFirma, obejmująca wymagany format danych, częstotliwość wywołań oraz mechanizmy potwierdzania transakcji.
+</decisions>
+<matched_recommendations>
+1. Zbudowanie modułu integracyjnego umożliwiającego synchronizację danych w czasie rzeczywistym z Shopify oraz Big Query.
+2. Zaprojektowanie sekwencyjnego przepływu użytkownika, obejmującego rejestrację/logowanie, podgląd stanów magazynowych oraz proces zakupu.
+3. Opracowanie szczegółowej specyfikacji integracji backendu n8n z wFirma.
+4. Ustalenie automatycznych mechanizmów wysyłania danych (proformy i faktury) przy użyciu webhooków.
+</matched_recommendations>
+<prd_planning_summary>
+Projekt dotyczy stworzenia platformy B2B dla sklepu na Shopify, która umożliwia:
+* Aktualizację danych o dostępności stocku z Shopify oraz możliwości produkcyjnych z Big Query w czasie rzeczywistym poprzez webhooki.
+* Płynny przepływ użytkownika rozpoczynający się od rejestracji/logowania, które pobiera kompletne dane firmy i użytkownika bez dodatkowej autoryzacji.
+* Prezentację widoku stanów magazynowych z informacjami o terminach realizacji, który umożliwia użytkownikowi podjęcie decyzji o zakupie.
+* Automatyczne wystawienie proformy w systemie wFirma po dokonanym zakupie, przy wykorzystaniu integracji backendu n8n oraz mechanizmu webhooków.
+* Automatyczne wysyłanie wystawionej faktury po realizacji zamówienia poprzez webhook (z implementacją tej funkcjonalności planowaną w n8n).
+</prd_planning_summary>
+<unresolved_issues>
+1. Dokładne szczegóły specyfikacji integracji backendu n8n z wFirma pozostają do ustalenia, w tym szczegóły dotyczące formatu danych, częstotliwości wywołań i mechanizmów potwierdzania transakcji.
+2. Konieczne jest dalsze doprecyzowanie kroków w sekwencyjnym przepływie użytkownika na podstawie szczegółowych scenariuszy.
+</unresolved_issues>
+</conversation_summary>
+
+
+
+</project_details>
+
+Wykonaj następujące kroki, aby stworzyć kompleksowy i dobrze zorganizowany dokument:
+
+1. Podziel PRD na następujące sekcje:
+   a. Przegląd projektu
+   b. Problem użytkownika
+   c. Wymagania funkcjonalne
+   d. Granice projektu
+   e. Historie użytkownika
+   f. Metryki sukcesu
+
+2. W każdej sekcji należy podać szczegółowe i istotne informacje w oparciu o opis projektu i odpowiedzi na pytania wyjaśniające. Upewnij się, że:
+   - Używasz jasnego i zwięzłego języka
+   - W razie potrzeby podajesz konkretne szczegóły i dane
+   - Zachowujesz spójność w całym dokumencie
+   - Odnosisz się do wszystkich punktów wymienionych w każdej sekcji
+
+3. Podczas tworzenia historyjek użytkownika i kryteriów akceptacji
+   - Wymień WSZYSTKIE niezbędne historyjki użytkownika, w tym scenariusze podstawowe, alternatywne i skrajne.
+   - Przypisz unikalny identyfikator wymagań (np. US-001) do każdej historyjki użytkownika w celu bezpośredniej identyfikowalności.
+   - Uwzględnij co najmniej jedną historię użytkownika specjalnie dla bezpiecznego dostępu lub uwierzytelniania, jeśli aplikacja wymaga identyfikacji użytkownika lub ograniczeń dostępu.
+   - Upewnij się, że żadna potencjalna interakcja użytkownika nie została pominięta.
+   - Upewnij się, że każda historia użytkownika jest testowalna.
+
+Użyj następującej struktury dla każdej historii użytkownika:
+- ID
+- Tytuł
+- Opis
+- Kryteria akceptacji
+
+4. Po ukończeniu PRD przejrzyj go pod kątem tej listy kontrolnej:
+   - Czy każdą historię użytkownika można przetestować?
+   - Czy kryteria akceptacji są jasne i konkretne?
+   - Czy mamy wystarczająco dużo historyjek użytkownika, aby zbudować w pełni funkcjonalną aplikację?
+   - Czy uwzględniliśmy wymagania dotyczące uwierzytelniania i autoryzacji (jeśli dotyczy)?
+
+5. Formatowanie PRD:
+   - Zachowaj spójne formatowanie i numerację.
+   - Nie używaj pogrubionego formatowania w markdown ( ** ).
+   - Wymień WSZYSTKIE historyjki użytkownika.
+   - Sformatuj PRD w poprawnym markdown.
+
+Przygotuj PRD z następującą strukturą:
+
+```markdown
+# Dokument wymagań produktu (PRD) - {{app-name}}
+## 1. Przegląd produktu
+## 2. Problem użytkownika
+## 3. Wymagania funkcjonalne
+## 4. Granice produktu
+## 5. Historyjki użytkowników
+## 6. Metryki sukcesu
+```
+
+Pamiętaj, aby wypełnić każdą sekcję szczegółowymi, istotnymi informacjami w oparciu o opis projektu i nasze pytania wyjaśniające. Upewnij się, że PRD jest wyczerpujący, jasny i zawiera wszystkie istotne informacje potrzebne do dalszej pracy nad produktem.
+
+Ostateczny wynik powinien składać się wyłącznie z PRD zgodnego ze wskazanym formatem w markdown, który zapiszesz w pliku .ai/prd.md
