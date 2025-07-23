@@ -1,0 +1,139 @@
+---
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import { DashboardHeader } from '../components/DashboardHeader';
+import { DashboardStats } from '../components/DashboardStats';
+import { ProductService } from '../db/products';
+
+// Get products data for stats (MVP version)
+const productsResponse = await ProductService.getProductsWithStock(Astro.locals.supabase);
+const products = productsResponse.data || [];
+
+// Calculate basic stats
+const totalProducts = products.length;
+const availableProducts = products.filter(p => p.availability_status === 'available').length;
+const lowStockProducts = products.filter(p => p.availability_status === 'low_stock').length;
+const outOfStockProducts = products.filter(p => p.availability_status === 'out_of_stock').length;
+
+// Prepare stats data
+const stats = [
+  {
+    title: 'Łączna liczba produktów',
+    value: totalProducts,
+    description: 'Wszystkie produkty w systemie',
+    icon: null, // SVG icons will be handled in React component
+  },
+  {
+    title: 'Produkty dostępne',
+    value: availableProducts,
+    description: 'Gotowe do zamówienia',
+    icon: null, // SVG icons will be handled in React component
+  },
+  {
+    title: 'Niski stan',
+    value: lowStockProducts,
+    description: 'Wymagają uzupełnienia',
+    icon: null, // SVG icons will be handled in React component
+  },
+  {
+    title: 'Niedostępne',
+    value: outOfStockProducts,
+    description: 'Brak w magazynie',
+    icon: null, // SVG icons will be handled in React component
+  },
+];
+---
+
+<DashboardLayout title="Dashboard - BangProof B2B">
+  <DashboardHeader 
+    title="Dashboard" 
+    description="Przegląd stanu magazynu i produktów"
+    client:load
+  >
+    <a 
+      href="/products" 
+      class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-black border border-transparent rounded-md hover:bg-[#75b4cf] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#75b4cf]"
+    >
+      Zobacz wszystkie produkty
+    </a>
+  </DashboardHeader>
+
+  <!-- Stats Overview -->
+  <div class="mt-6">
+    <DashboardStats stats={stats} client:load />
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="mt-8">
+    <div class="bg-white overflow-hidden shadow rounded-lg">
+      <div class="px-4 py-5 sm:p-6">
+        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">
+          Szybkie akcje
+        </h3>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <a 
+            href="/products" 
+            class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-[#75b4cf] rounded-lg border border-gray-200 hover:border-[#75b4cf] hover:shadow-md transition-all"
+          >
+            <div>
+              <span class="rounded-lg inline-flex p-3 bg-gray-50 text-[#75b4cf] ring-4 ring-white">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+              </span>
+            </div>
+            <div class="mt-4">
+              <h3 class="text-lg font-medium text-gray-900">
+                <span class="absolute inset-0" aria-hidden="true"></span>
+                Zarządzaj produktami
+              </h3>
+              <p class="mt-2 text-sm text-gray-500">
+                Zobacz pełną listę produktów, sprawdź stany magazynowe i możliwości produkcyjne.
+              </p>
+            </div>
+            <span class="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400" aria-hidden="true">
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z"/>
+              </svg>
+            </span>
+          </a>
+
+          <div class="relative group bg-[#f5f5f5] p-6 rounded-lg border border-gray-200">
+            <div>
+              <span class="rounded-lg inline-flex p-3 bg-gray-100 text-gray-400 ring-4 ring-white">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+              </span>
+            </div>
+            <div class="mt-4">
+              <h3 class="text-lg font-medium text-gray-500">
+                Zamówienia
+              </h3>
+              <p class="mt-2 text-sm text-gray-400">
+                Funkcjonalność dostępna w kolejnych wersjach systemu.
+              </p>
+            </div>
+          </div>
+
+          <div class="relative group bg-[#f5f5f5] p-6 rounded-lg border border-gray-200">
+            <div>
+              <span class="rounded-lg inline-flex p-3 bg-gray-100 text-gray-400 ring-4 ring-white">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </span>
+            </div>
+            <div class="mt-4">
+              <h3 class="text-lg font-medium text-gray-500">
+                Raporty
+              </h3>
+              <p class="mt-2 text-sm text-gray-400">
+                Funkcjonalność dostępna w kolejnych wersjach systemu.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DashboardLayout> 

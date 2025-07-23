@@ -1,8 +1,54 @@
 ---
-import Welcome from "../components/Welcome.astro";
-import Layout from "../layouts/Layout.astro";
+import Layout from '../layouts/Layout.astro';
+
+// Redirect to dashboard if authenticated, or show landing page
+if (Astro.locals.isAuthenticated) {
+  return Astro.redirect('/dashboard');
+}
 ---
 
-<Layout>
-  <Welcome />
+<Layout title="BangProof B2B - Platforma dla partnerów biznesowych">
+  <div class="min-h-screen bg-[#f5f5f5] flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+      <!-- Logo -->
+      <div class="text-center mb-8">
+        <img 
+          src="https://cdn.shopify.com/s/files/1/0765/4283/7072/files/project-logo.png?v=1753302624" 
+          alt="BangProof Logo" 
+          class="h-12 mx-auto mb-4"
+        />
+        <h1 class="text-2xl font-bold text-gray-900">BangProof B2B</h1>
+        <p class="text-gray-600 mt-2">Platforma dla partnerów biznesowych</p>
+      </div>
+
+      <!-- Card -->
+      <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-6">
+        <div class="space-y-4">
+          <div class="text-center mb-6">
+            <h2 class="text-xl font-semibold text-gray-900">Rozpocznij współpracę</h2>
+            <p class="text-gray-600 mt-2">Zaloguj się lub załóż konto partnerskie</p>
+          </div>
+
+          <a 
+            href="/login" 
+            class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-[#75b4cf] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#75b4cf]"
+          >
+            Zaloguj się
+          </a>
+
+          <a 
+            href="/register" 
+            class="w-full inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#75b4cf]"
+          >
+            Zarejestruj firmę
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer text -->
+      <p class="text-center text-xs text-gray-500 mt-6">
+        &copy; 2024 BangProof B2B. Wszystkie prawa zastrzeżone.
+      </p>
+    </div>
+  </div>
 </Layout>

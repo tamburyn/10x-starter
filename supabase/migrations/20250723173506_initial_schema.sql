@@ -15,6 +15,24 @@ create table companies (
     updated_at timestamptz not null default now()
 );
 
+-- Create a trigger function to handle company_id in auth.users
+create or replace function public.handle_user_company_id()
+returns trigger as $$
+begin
+    -- Add company_id to the user's metadata
+    new.raw_user_meta_data = 
+        coalesce(new.raw_user_meta_data, '{}'::jsonb) || 
+        jsonb_build_object('company_id', new.raw_user_meta_data->>'company_id');
+    
+    return new;
+end;
+$$ language plpgsql security definer;
+
+-- Create a trigger to automatically handle company_id
+create trigger on_auth_user_created
+    before insert on auth.users
+    for each row execute procedure public.handle_user_company_id();
+
 -- Enable RLS for companies
 alter table companies enable row level security;
 
@@ -33,11 +51,7 @@ create policy "Companies are updatable by users from the same company"
     on companies for update
     to authenticated
     using (
-        id in (
-            select company_id 
-            from auth.users 
-            where auth.uid() = id
-        )
+        id::text = ((auth.jwt() ->> 'user_metadata')::jsonb ->> 'company_id')
     );
 
 -- Products table
@@ -120,33 +134,21 @@ create policy "Users can view orders from their company"
     on orders for select
     to authenticated
     using (
-        company_id in (
-            select company_id 
-            from auth.users 
-            where auth.uid() = id
-        )
+        company_id::text = ((auth.jwt() ->> 'user_metadata')::jsonb ->> 'company_id')
     );
 
 create policy "Users can create orders for their company"
     on orders for insert
     to authenticated
     with check (
-        company_id in (
-            select company_id 
-            from auth.users 
-            where auth.uid() = id
-        )
+        company_id::text = ((auth.jwt() ->> 'user_metadata')::jsonb ->> 'company_id')
     );
 
 create policy "Users can update orders from their company"
     on orders for update
     to authenticated
     using (
-        company_id in (
-            select company_id 
-            from auth.users 
-            where auth.uid() = id
-        )
+        company_id::text = ((auth.jwt() ->> 'user_metadata')::jsonb ->> 'company_id')
     );
 
 -- Order Items table
@@ -169,11 +171,7 @@ create policy "Users can view order items from their company's orders"
         order_id in (
             select id 
             from orders 
-            where company_id in (
-                select company_id 
-                from auth.users 
-                where auth.uid() = id
-            )
+            where company_id::text = ((auth.jwt() ->> 'user_metadata')::jsonb ->> 'company_id')
         )
     );
 
@@ -184,11 +182,7 @@ create policy "Users can create order items for their company's orders"
         order_id in (
             select id 
             from orders 
-            where company_id in (
-                select company_id 
-                from auth.users 
-                where auth.uid() = id
-            )
+            where company_id::text = ((auth.jwt() ->> 'user_metadata')::jsonb ->> 'company_id')
         )
     );
 
@@ -211,11 +205,7 @@ create policy "Users can view proformas from their company's orders"
         order_id in (
             select id 
             from orders 
-            where company_id in (
-                select company_id 
-                from auth.users 
-                where auth.uid() = id
-            )
+            where company_id::text = ((auth.jwt() ->> 'user_metadata')::jsonb ->> 'company_id')
         )
     );
 
@@ -226,11 +216,7 @@ create policy "Users can create proformas for their company's orders"
         order_id in (
             select id 
             from orders 
-            where company_id in (
-                select company_id 
-                from auth.users 
-                where auth.uid() = id
-            )
+            where company_id::text = ((auth.jwt() ->> 'user_metadata')::jsonb ->> 'company_id')
         )
     );
 
@@ -253,11 +239,7 @@ create policy "Users can view invoices from their company's orders"
         order_id in (
             select id 
             from orders 
-            where company_id in (
-                select company_id 
-                from auth.users 
-                where auth.uid() = id
-            )
+            where company_id::text = ((auth.jwt() ->> 'user_metadata')::jsonb ->> 'company_id')
         )
     );
 
@@ -268,11 +250,7 @@ create policy "Users can create invoices for their company's orders"
         order_id in (
             select id 
             from orders 
-            where company_id in (
-                select company_id 
-                from auth.users 
-                where auth.uid() = id
-            )
+            where company_id::text = ((auth.jwt() ->> 'user_metadata')::jsonb ->> 'company_id')
         )
     );
 
@@ -325,7 +303,7 @@ create policy "Users can create inventory logs"
     with check (true);
 
 -- Create indexes
-create index idx_users_company_id on auth.users(company_id);
+-- Note: We don't need an index on auth.users(company_id) since we're using metadata
 create index idx_orders_order_date on orders(order_date);
 create index idx_products_last_updated on products(last_updated);
 create index idx_reservations_expiration_date on reservations(expiration_date);

@@ -1,0 +1,119 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Dashboard - BangProof B2B" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-[#f5f5f5]">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <!-- Logo and Navigation -->
+          <div class="flex items-center">
+            <div class="flex-shrink-0 flex items-center">
+              <img 
+                src="https://cdn.shopify.com/s/files/1/0765/4283/7072/files/project-logo.png?v=1753302624" 
+                alt="BangProof Logo" 
+                class="h-8 w-auto"
+              />
+              <span class="ml-3 text-xl font-bold text-gray-900">BangProof B2B</span>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="hidden sm:ml-8 sm:flex sm:space-x-8">
+              <a 
+                href="/dashboard" 
+                class="border-transparent text-gray-500 hover:text-[#75b4cf] hover:border-[#75b4cf] inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors"
+              >
+                Dashboard
+              </a>
+              <a 
+                href="/products" 
+                class="border-transparent text-gray-500 hover:text-[#75b4cf] hover:border-[#75b4cf] inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors"
+              >
+                Produkty
+              </a>
+              <a 
+                href="/orders" 
+                class="border-transparent text-gray-500 hover:text-[#75b4cf] hover:border-[#75b4cf] inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors"
+              >
+                Zamówienia
+              </a>
+            </div>
+          </div>
+
+          <!-- User Menu -->
+          <div class="flex items-center">
+            <div id="user-menu-container">
+              <!-- This will be hydrated by React -->
+              <div class="text-gray-500">Ładowanie...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <slot />
+    </main>
+
+    <!-- User Menu Script -->
+    <script>
+      import { createClient } from '@supabase/supabase-js';
+
+      // Create Supabase client
+      const supabase = createClient(
+        import.meta.env.PUBLIC_SUPABASE_URL,
+        import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+      );
+
+      document.addEventListener('DOMContentLoaded', async () => {
+        const container = document.getElementById('user-menu-container');
+        if (!container) return;
+
+        // Get current user
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          // Create simple user menu HTML
+          container.innerHTML = `
+            <div class="flex items-center space-x-4">
+              <span class="text-sm text-gray-700">${user.email}</span>
+              <button id="logout-btn" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-black hover:bg-[#75b4cf] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#75b4cf]">
+                Wyloguj
+              </button>
+            </div>
+          `;
+
+          // Add logout functionality
+          const logoutBtn = document.getElementById('logout-btn');
+          if (logoutBtn) {
+            logoutBtn.addEventListener('click', async () => {
+              await supabase.auth.signOut();
+              window.location.href = '/login';
+            });
+          }
+        } else {
+          container.innerHTML = `
+            <a href="/login" class="text-sm text-gray-700 hover:text-[#75b4cf]">Zaloguj się</a>
+          `;
+        }
+      });
+    </script>
+  </body>
+</html> 
